@@ -63,12 +63,15 @@ nifi_node_logback_content = config['configurations']['nifi-node-logback-env']['c
 # params from nifi-properties-env
 nifi_master_properties_content = config['configurations']['nifi-master-properties-env']['content']
 nifi_node_properties_content = config['configurations']['nifi-node-properties-env']['content']
-  
+
 # params from nifi-flow
 nifi_flow_content = config['configurations']['nifi-flow-env']['content']
 
-
-
+#params from nifi-state-management
+nifi_master_state_management_content = config['configurations']['nifi-master-state-management-env']['content']
+nifi_master_zookeeper_connection_string = config['configurations']['nifi-master-state-management-env']['nifi_zookeeper_connection_string']
+nifi_node_state_management_content = config['configurations']['nifi-node-state-management-env']['content']
+nifi_node_zookeeper_connection_string = config['configurations']['nifi-node-state-management-env']['nifi_zookeeper_connection_string']
 
 #autodetect jdk home
 jdk64_home=config['hostLevelParams']['java_home']

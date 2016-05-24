@@ -149,7 +149,7 @@ class Master(Script):
     params.nifi_node_host = socket.gethostname()
     #write out nifi.properties
     properties_content=InlineTemplate(params.nifi_master_properties_content)
-    File(format("{params.conf_dir}/nifi.properties"), content=properties_content, owner=params.nifi_user, group=params.nifi_group) # , mode=0777)    
+    File(format("{params.conf_dir}/nifi.properties"), content=properties_content, owner=params.nifi_user, group=params.nifi_group) # , mode=0777)
 
     #write out flow.tar only during install to setup Ambari metrics reporting task in Nifi
     if isInstall:
@@ -165,9 +165,13 @@ class Master(Script):
 
     #write out logback.xml
     logback_content=InlineTemplate(params.nifi_master_logback_content)
-    File(format("{params.conf_dir}/logback.xml"), content=logback_content, owner=params.nifi_user, group=params.nifi_group) 
-    
-    
+    File(format("{params.conf_dir}/logback.xml"), content=logback_content, owner=params.nifi_user, group=params.nifi_group)
+
+    #write out state-management.xml
+    params.nifi_master_state_management_content=params.nifi_master_state_management_content.replace("{{nifi_zookeeper_connection_string}}",params.nifi_master_zookeeper_connection_string)
+    state_management_content=InlineTemplate(params.nifi_master_state_management_content)
+    File(format("{params.conf_dir}/state-management.xml"), content=state_management_content, owner=params.nifi_user, group=params.nifi_group)
+
     
   def stop(self, env):
     import params

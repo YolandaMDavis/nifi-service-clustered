@@ -166,9 +166,13 @@ class Master(Script):
 
     #write out logback.xml
     logback_content=InlineTemplate(params.nifi_node_logback_content)
-    File(format("{params.conf_dir}/logback.xml"), content=logback_content, owner=params.nifi_user, group=params.nifi_group) 
-    
-    
+    File(format("{params.conf_dir}/logback.xml"), content=logback_content, owner=params.nifi_user, group=params.nifi_group)
+
+    #write out state-management.xml
+    params.nifi_node_state_management_content=params.nifi_node_state_management_content.replace("{{nifi_zookeeper_connection_string}}",params.nifi_node_zookeeper_connection_string)
+    state_management_content=InlineTemplate(params.nifi_node_state_management_content)
+    File(format("{params.conf_dir}/state-management.xml"), content=state_management_content, owner=params.nifi_user, group=params.nifi_group)
+
     
   def stop(self, env):
     import params
